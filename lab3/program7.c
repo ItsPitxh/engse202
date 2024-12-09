@@ -4,14 +4,14 @@
 
 int main()
 {
-    int pid;
+    int pid = fork();
 
-    pid = fork(); /* Duplicate. Child and parent continue from here */
 
     if (pid != 0) /* pid is non-zero, so I must be the parent */
     {
         while(1)
             sleep(10);
+        
     }
     else /* pid is zero, so I must be the child */
     {

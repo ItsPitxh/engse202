@@ -6,6 +6,7 @@
 
 int main(void)
 {
+    fflush(stdout);
     int pid;
     int status;
 
@@ -25,4 +26,5 @@ int main(void)
         wait(&status); /* parent waits for child to finish */
         printf("I am the parent process.\n");
     }
+    
 }
