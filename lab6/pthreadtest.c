@@ -5,7 +5,8 @@
 
 void *print_message_function(void *ptr);
 
-int count = 0;
+int count = 0;                      // Shared variable
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER; // Mutex for synchronization
 
 int main() {
     pthread_t thread1, thread2, thread3;
@@ -24,8 +25,9 @@ int main() {
     pthread_join(thread2, NULL);
     pthread_join(thread3, NULL);
 
+    pthread_mutex_destroy(&mutex); // Clean up mutex
     return 0;
-}q
+}
 
 void *print_message_function(void *ptr) {
     char *message = (char *)ptr;
@@ -33,8 +35,12 @@ void *print_message_function(void *ptr) {
 
     for (int i = 0; i < 10; i++) {
         sleep(1);
+
+        // Lock the mutex before modifying the shared variable
+        pthread_mutex_lock(&mutex);
         printf("%lu -> %d count = %d\n", pthread_self(), i, count);
         count++;
+        pthread_mutex_unlock(&mutex); // Unlock the mutex after modification
     }
     return NULL;
 }
