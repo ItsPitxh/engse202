@@ -25,7 +25,7 @@ int main() {
     pthread_join(thread3, NULL);
 
     return 0;
-}q
+}
 
 void *print_message_function(void *ptr) {
     char *message = (char *)ptr;
